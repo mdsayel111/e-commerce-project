@@ -1,0 +1,116 @@
+[
+    {
+        "name": "Slim Fit Chino Pants",
+        "description": "Classic slim-fit chino pants for a modern look.",
+        "price": 49.99,
+        "imgUrl": "https://media.e-valy.com/cms/products/images/86929303-265e-480f-bb47-0dcf035ff48e"
+    },
+    {
+        "name": "Cotton Oxford Button-Down Shirt",
+        "description": "Stylish cotton Oxford button-down shirt for a casual or business-casual look.",
+        "price": 34.99,
+        "imgUrl": "https://richmanbd.com/wp-content/uploads/2023/10/18a-600x600.jpg"
+    },
+    {
+        "name": "Leather Loafers",
+        "description": "Genuine leather loafers for a comfortable and sophisticated style.",
+        "price": 89.99,
+        "imgUrl": "https://fcity.in/images/products/206117799/glzpb_512.jpg"
+    },
+    {
+        "name": "Chronograph Wristwatch",
+        "description": "Elegant chronograph wristwatch with stainless steel strap and water resistance.",
+        "price": 129.99,
+        "imgUrl": "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSQ-FA92CLKqlWZX_RdCxBC3s3Yn7h4YXlxh3TxkACnpzO4pu3xWrTh9pBSNlzH_CnPQ5Y&usqp=CAU"
+    },
+    {
+        "name": "Floral Print Summer Dress",
+        "description": "Light and flowy floral print dress for a chic summer look.",
+        "price": 59.99,
+        "imgUrl": "https://zapaka.com.au/cdn/shop/products/ZPKCGZL21497_Black_1_first_1200x1200.jpg?v=1634291640"
+    },
+    {
+        "name": "High Heel Sandals",
+        "description": "Stylish high heel sandals for a fashionable touch to any outfit.",
+        "price": 79.99,
+        "imgUrl": "https://gaiasouldesigns.com/cdn/shop/files/image-995251d5-47fd-4c98-a3be-bac62a281a94-_11_800x.jpg?v=1690257668"
+    },
+    {
+        "name": "Cartoon Graphic T-Shirt",
+        "description": "Colorful and playful cartoon graphic t-shirt for kids.",
+        "price": 19.99,
+        "imgUrl": "https://contents.mediadecathlon.com/p2567818/1bd67d8d7fa0df309cb519b38f2bd353/p2567818.jpg?format=auto&f=768x0"
+    },
+    {
+        "name": "Light-Up Sneakers",
+        "description": "Fun and comfortable light-up sneakers for active kids.",
+        "price": 39.99,
+        "imgUrl": "https://babai.com.bd/wp-content/uploads/2023/11/1198-ORI-PINK-2-600x600.jpg"
+    },
+    {
+        "name": "Skinny Fit Denim Jeans",
+        "description": "Trendy skinny fit denim jeans for a stylish look.",
+        "price": 54.99,
+        "imgUrl": "https://redbridgejeans.de/media/image/product/68475/lg/m4256_red-bridge-mens-jogger-denim-cargo-pants-colored-jeans-jeans-pants-slim-leg-m4256_96.jpg"
+    },
+    {
+        "name": "Silk Blouse with Lace Detail",
+        "description": "Elegant silk blouse with lace detail for a sophisticated touch.",
+        "price": 69.99,
+        "imgUrl": "https://www.lilysilk.com/media/catalog/product/m1/9518/main/elegant-v-neck-silk-lace-blouse-01.jpg?quality=80&bg-color=255%2C255%2C255&fit=bounds&width=1800"
+    },
+    {
+        "name": "Cargo Jogger Pants",
+        "description": "Trendy cargo jogger pants for a sporty and urban look.",
+        "price": 44.99,
+        "imgUrl": "https://img.fruugo.com/product/7/92/226475927_max.jpg"
+    },
+    {
+        "name": "Linen Short Sleeve Shirt",
+        "description": "Lightweight linen short-sleeve shirt, perfect for summer days.",
+        "price": 29.99,
+        "imgUrl": "https://prod.saralifestyle.com/Images/Products/VariationWisetImage/b3e234f81e184536aba23191beff9d60.jpeg"
+    },
+    {
+        "name": "Running Shoes",
+        "description": "Comfortable running shoes with cushioned soles for active lifestyles.",
+        "price": 59.99,
+        "imgUrl": "https://n.nordstrommedia.com/id/842e824a-ec57-42aa-ba44-fa100756a349.jpeg?h=900&w=750"
+    },
+    {
+        "name": "Automatic Dive Watch",
+        "description": "Durable automatic dive watch with a stainless steel case and luminous markers.",
+        "price": 179.99,
+        "imgUrl": "https://www.shopz.com.bd/wp-content/uploads/2021/10/CURREN-3.jpg"
+    },
+    {
+        "name": "Ladies' Jogger Pants",
+        "description": "Stylish jogger pants for a comfortable and trendy look.",
+        "price": 49.99,
+        "imgUrl": "https://5.imimg.com/data5/SELLER/Default/2023/1/XS/UH/FZ/43967183/maroon-2.jpg"
+    },
+    {
+        "name": "Ladies' Blazer",
+        "description": "Classic blazer for a polished and professional appearance.",
+        "price": 89.99,
+        "imgUrl": "https://i.pinimg.com/736x/7e/85/26/7e8526afd05fc353712e60d8a900ce5a.jpg"
+    },
+    {
+        "name": "Kids' Hoodie",
+        "description": "Cozy hoodie for kids, perfect for colder days.",
+        "price": 29.99,
+        "imgUrl": "https://5.imimg.com/data5/SELLER/Default/2021/12/UA/EL/TV/144518289/men-s-hoddies-500x500.jpg"
+    },
+    {
+        "name": "Kids' Backpack",
+        "description": "Colorful and durable backpack for kids.",
+        "price": 24.99,
+        "imgUrl": "https://static-01.daraz.com.bd/p/51c57cd543561b326397bcaffa994080.jpg"
+    },
+    {
+        "name": "Cargo Shorts",
+        "description": "Casual cargo shorts for a relaxed summer style.",
+        "price": 39.99,
+        "imgUrl": "https://static-01.daraz.com.bd/p/9c0a47d995d2714891a87011403f79d0.jpg"
+    }
+]

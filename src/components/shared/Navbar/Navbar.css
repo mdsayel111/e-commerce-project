@@ -1,0 +1,8 @@
+/* @media only screen and (max-width: 899px) {
+  #logo {
+    display: none;
+  }
+} */
+.css-1sonn6x-MuiButtonBase-root-MuiButton-root:hover{
+  background-color: black !important;
+}
