@@ -1,4 +1,4 @@
-import { userCollection } from "@/Utils/MongiDB";
+import { userCollection } from "@/Utils/MongoDB";
 import { NextResponse } from "next/server";
 import { json } from "react-router-dom";
 const jwt = require("jsonwebtoken");

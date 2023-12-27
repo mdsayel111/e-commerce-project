@@ -5,6 +5,7 @@ import MuiConfig from "@/configaration/MUI.config";
 import GlobalContextProvider from "@/context/GlobalContext";
 import AuthProvider from "@/context/AuthContext";
 import { Toaster } from "react-hot-toast";
+import PrivateRoute from "@/Routes/PrivateRoute";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
@@ -20,7 +21,7 @@ export default function RootLayout({ children }) {
           <AuthProvider>
             <MuiConfig>
               <Navbar />
-              {children}
+              <PrivateRoute>{children}</PrivateRoute>
               <Toaster />
             </MuiConfig>
           </AuthProvider>

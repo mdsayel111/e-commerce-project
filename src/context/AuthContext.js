@@ -14,9 +14,8 @@ import {
 import { GoogleAuthProvider } from "firebase/auth";
 import { GetRole, GetToken, SaveUserInDb, uploadImage } from "../Utils/Utils";
 import toast from "react-hot-toast";
-// import useLoader from "@/Hooks/useLoader";
-// import Lottie from "lottie-react";
-// import Loading from "@/assets/animation/Loading.json";
+import useLoader from "@/Hooks/usePageLoader";
+import { useRouter } from "next/navigation";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -25,6 +24,9 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [cart, setCart] = useState([]);
+  const Loader = useLoader();
+  const router = useRouter();
 
   const SignUp = async (name, email, password, formData) => {
     try {
@@ -38,7 +40,6 @@ const AuthProvider = ({ children }) => {
         await UpdateUserFirebase(name, photoUrl);
         const mongoDBSaveResult = await SaveUserInDb(result.user);
         await GetToken(result.user.email);
-        console.log(mongoDBSaveResult);
         if (mongoDBSaveResult.data.insertedId) {
           toast.success("User creat successful");
         }
@@ -63,7 +64,6 @@ const AuthProvider = ({ children }) => {
   const socialLogin = async () => {
     try {
       const result = await signInWithPopup(auth, googleProvider);
-
       const mongoDBSaveResult = await SaveUserInDb(result.user);
       await GetToken(result.user.email);
       if (mongoDBSaveResult?.data?.acknowledged) {
@@ -72,13 +72,11 @@ const AuthProvider = ({ children }) => {
       toast.success("Log In successful");
     } catch (err) {
       toast.error(err.code);
-      return err;
     }
   };
 
   const SignOut = async () => {
     await signOut(auth);
-    localStorage.removeItem("token");
   };
 
   const UpdateUserFirebase = async (
@@ -112,6 +110,11 @@ const AuthProvider = ({ children }) => {
     });
   }, []);
 
+  useEffect(() => {
+    const cart = window.localStorage.getItem("cart");
+    setCart(JSON.parse(cart));
+  }, []);
+
   const authInfo = {
     loading,
     SignUp,
@@ -120,12 +123,28 @@ const AuthProvider = ({ children }) => {
     socialLogin,
     SignIn,
     SignOut,
+    cart,
+    setCart,
   };
 
   return (
     <AuthContext.Provider value={authInfo}>
-      {/* {loading ? <>{Loader}</> : children} */}
-      {children}
+      {loading ? (
+        <div
+          style={{
+            width: "100% !important",
+            height: "100vh !important",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+          }}
+        >
+          {Loader}
+        </div>
+      ) : (
+        children
+      )}
+      {/* {children} */}
     </AuthContext.Provider>
   );
 };

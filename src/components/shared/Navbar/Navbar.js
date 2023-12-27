@@ -63,7 +63,7 @@ const Search = styled("div")(({ theme }) => ({
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { user } = useAuth();
+  const { user, SignOut } = useAuth();
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -78,6 +78,10 @@ function Navbar() {
 
   const handleCloseUserMenu = () => {
     setAnchorElUser(null);
+  };
+
+  const logOut = () => {
+    SignOut();
   };
 
   return (
@@ -178,7 +182,7 @@ function Navbar() {
               Products
             </Link>
             <Link
-              href={"/signup-or-signin"}
+              href={"/cart"}
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "black", display: "block" }}
             >
@@ -189,6 +193,7 @@ function Navbar() {
                 fullWidth
                 variant="contained"
                 sx={{ mt: 3, mb: 2, backgroundColor: "black !important" }}
+                onClick={logOut}
               >
                 Log Out
               </Button>

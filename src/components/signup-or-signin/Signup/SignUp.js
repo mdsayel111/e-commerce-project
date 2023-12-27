@@ -16,6 +16,7 @@ import { useForm } from "react-hook-form";
 import "../SigninOrSignUp.css";
 import useAuth from "@/Hooks/useAuth";
 import { styled } from "@mui/material/styles";
+import { useRouter } from "next/navigation";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -24,6 +25,7 @@ const defaultTheme = createTheme();
 export default function SignUp({ setSignUpOrSignIn }) {
   const { SignUp } = useAuth();
   const [loading, setLoading] = React.useState(false);
+  const navgate = useRouter();
 
   const {
     register,
@@ -38,6 +40,7 @@ export default function SignUp({ setSignUpOrSignIn }) {
     formData.append("image", imageFile[0]);
     SignUp(`${firstName} ${lastName}`, email, password, formData);
     setLoading(false);
+    navgate.replace("/");
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -160,7 +163,12 @@ export default function SignUp({ setSignUpOrSignIn }) {
                   type="submit"
                   fullWidth
                   variant="contained"
-                  sx={{ mt: 3, mb: 2, backgroundColor: "black" }}
+                  sx={{
+                    mt: 3,
+                    mb: 2,
+                    backgroundColor: "black !important",
+                    color: "white !important",
+                  }}
                 >
                   {loading ? loader : "Sign Up"}
                 </Button>

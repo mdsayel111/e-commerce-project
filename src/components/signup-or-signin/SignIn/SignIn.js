@@ -15,7 +15,9 @@ import { useForm } from "react-hook-form";
 import "../SigninOrSignUp.css";
 import useAuth from "@/Hooks/useAuth";
 import { styled } from "@mui/material/styles";
-import useLoader from "@/Hooks/useLoader";
+import useComponentLoader from "@/Hooks/useComponentLoader";
+import { useRouter } from "next/navigation";
+import GoogleButton from "@/components/shared/GoogleButton/GoogleButton";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -24,7 +26,8 @@ const defaultTheme = createTheme();
 export default function SignIn({ setSignUpOrSignIn }) {
   const { SignIn } = useAuth();
   const [loading, setLoading] = useState(false);
-  const loader = useLoader();
+  const loader = useComponentLoader();
+  const navgate = useRouter();
 
   const {
     register,
@@ -37,6 +40,7 @@ export default function SignIn({ setSignUpOrSignIn }) {
     const { email, password } = data;
     await SignIn(email, password);
     setLoading(false);
+    navgate.replace("/");
   };
 
   const VisuallyHiddenInput = styled("input")({
@@ -111,10 +115,16 @@ export default function SignIn({ setSignUpOrSignIn }) {
               type="submit"
               fullWidth
               variant="contained"
-              sx={{ mt: 3, mb: 2, backgroundColor: "black" }}
+              sx={{
+                mt: 3,
+                mb: 2,
+                backgroundColor: "black !important",
+                color: "white !important",
+              }}
             >
               {loading ? loader : "Sign In"}
             </Button>
+            <GoogleButton />
             <Grid container justifyContent="flex-end">
               <Grid item>
                 <span variant="body2">

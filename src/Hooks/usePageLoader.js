@@ -1,8 +1,7 @@
 "use client";
 
-import Lottie from "lottie-react";
 import React from "react";
-import Loading from "@/assets/animation/Loading.json";
+import { CircularProgress } from "@mui/material";
 
 const useLoader = () => {
   return (
@@ -12,7 +11,7 @@ const useLoader = () => {
         height: "fit-content",
       }}
     >
-      <Lottie animationData={Loading} loop={true} />
+      <CircularProgress sx={{ color: "black" }} size={60} />
     </div>
   );
 };

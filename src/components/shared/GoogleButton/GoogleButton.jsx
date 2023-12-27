@@ -1,6 +1,7 @@
 import { FcGoogle } from "react-icons/fc";
-import useAuth from "../../../Hooks/useAuth";
 import { useRouter } from "next/navigation";
+import toast from "react-hot-toast";
+import useAuth from "@/Hooks/useAuth";
 
 const GoogleButton = () => {
   const { socialLogin } = useAuth();
@@ -9,15 +10,14 @@ const GoogleButton = () => {
   const handleSocialLogin = async () => {
     try {
       await socialLogin();
-      navigate.push("/");
-      // location.reload();
+      navigate.replace("/");
     } catch (err) {
-      console.log(err);
+      toast.err(err);
     }
   };
-  
+
   return (
-    <div className="px-8 pb-8">
+    <div className="">
       <div
         onClick={handleSocialLogin}
         className="flex justify-evenly border-primary border-2 p-2 rounded-md cursor-pointer"
