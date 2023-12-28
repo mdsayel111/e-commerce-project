@@ -45,7 +45,6 @@ const AuthProvider = ({ children }) => {
         }
       }
     } catch (err) {
-      console.log(err);
       toast.error(`${err.code}`);
       return err;
     }

@@ -17,6 +17,7 @@ import "./Navbar.css";
 import Link from "next/link";
 import useAuth from "@/Hooks/useAuth";
 import { Button } from "@mui/material";
+import Logo from "./Logo";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -91,38 +92,7 @@ function Navbar() {
         sx={{ backgroundColor: "white", color: "black" }}
       >
         <div className="flex justify-between items-center">
-          <div id="logo" className="flex items-center py-2">
-            <div
-              style={{
-                position: "relative",
-                width: "50px",
-                height: "50px",
-              }}
-            >
-              <Image
-                src={"/image/logo.jpeg"}
-                alt={"logo"}
-                width={100}
-                height={100}
-                layout="responsive"
-                className="rounded-full"
-              />
-            </div>
-            <Typography
-              variant="h6"
-              noWrap
-              component="a"
-              href="#app-bar-with-responsive-menu"
-              sx={{
-                ml: 2,
-                fontWeight: 700,
-                color: "inherit",
-                textDecoration: "none",
-              }}
-            >
-              Digital Dokan
-            </Typography>
-          </div>
+          <Logo />
 
           <Box sx={{ display: { xs: "flex", md: "none" }, mr: "20px" }}>
             <IconButton
@@ -154,8 +124,63 @@ function Navbar() {
                 mr: "20px",
               }}
             >
-              <MenuItem onClick={handleCloseNavMenu}>
-                <Typography textAlign="center">Home</Typography>
+              <MenuItem className="flex flex-col p-4">
+                <Typography textAlign="center">
+                  <Link
+                    href={"/"}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "black", display: "block" }}
+                  >
+                    Home
+                  </Link>
+                </Typography>
+                <Typography textAlign="center">
+                  <Link
+                    href={"/products"}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "black", display: "block" }}
+                  >
+                    Products
+                  </Link>
+                </Typography>
+                <Typography textAlign="center">
+                  <Link
+                    href={"/admin/dashboard/all-product"}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "black", display: "block" }}
+                  >
+                    Dashboard
+                  </Link>
+                </Typography>
+                <Typography textAlign="center">
+                  <Link
+                    href={"/cart"}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "black", display: "block" }}
+                  >
+                    Cart
+                  </Link>
+                </Typography>
+                <Typography textAlign="center">
+                  {user ? (
+                    <Button
+                      fullWidth
+                      variant="contained"
+                      sx={{ backgroundColor: "black !important" }}
+                      onClick={logOut}
+                    >
+                      Log Out
+                    </Button>
+                  ) : (
+                    <Link
+                      href={"/signup-or-signin"}
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "black", display: "block" }}
+                    >
+                      SignUp Or SignIn
+                    </Link>
+                  )}
+                </Typography>
               </MenuItem>
             </Menu>
           </Box>
@@ -187,6 +212,13 @@ function Navbar() {
               sx={{ my: 2, color: "black", display: "block" }}
             >
               Cart
+            </Link>
+            <Link
+              href={"/admin/dashboard/all-product"}
+              onClick={handleCloseNavMenu}
+              sx={{ my: 2, color: "black", display: "block" }}
+            >
+              Dashboard
             </Link>
             {user ? (
               <Button

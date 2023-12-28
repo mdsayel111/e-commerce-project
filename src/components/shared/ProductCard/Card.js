@@ -7,35 +7,14 @@ import Typography from "@mui/material/Typography";
 import { CardActionArea, CardActions } from "@mui/material";
 import Image from "next/legacy/image";
 import useAuth from "@/Hooks/useAuth";
-import toast from "react-hot-toast";
-import { set } from "react-hook-form";
+import { usePathname } from "next/navigation";
+import UserPageCardBtn from "./UserPageCardBtn";
+import AdminPageCardBtn from "./AdminPageCardBtn";
+import "./Card.css";
 
 export default function MultiActionAreaCard({ item }) {
   const { user, setCart } = useAuth();
-
-  const handleCart = (item) => {
-    console.log(item);
-    const cartInLocal = window.localStorage.getItem("cart");
-
-    // add product in cart and save local storage
-    if (cartInLocal) {
-      const cart = JSON.parse(cartInLocal);
-      // console.log(cart);
-      if (cart?.find((obj) => obj._id === item._id)) {
-        toast.error("Product in cart");
-      } else {
-        cart.push(item);
-        setCart(cart);
-        window.localStorage.setItem("cart", JSON.stringify(cart));
-        toast.success("Successful to add cart");
-      }
-    } else {
-      const cart = JSON.stringify([item]);
-      setCart([item]);
-      window.localStorage.setItem("cart", cart);
-      toast.success("Successful to add cart");
-    }
-  };
+  const path = usePathname();;
 
   return (
     <Card sx={{ maxWidth: 300, height: "100%" }}>
@@ -72,15 +51,11 @@ export default function MultiActionAreaCard({ item }) {
           </Typography>
         </CardContent>
         <p>{`Price : $ ${item.price}`}</p>
-        <CardActions sx={{ width: "100%" }}>
-          <span
-            onClick={() => handleCart(item)}
-            size="small"
-            className="btn bg-black text-white py-1 px-4 text-center rounded-lg w-full block"
-          >
-            ADD TO CART
-          </span>
-        </CardActions>
+        {path === "/products" ? (
+          <UserPageCardBtn item={item} />
+        ) : (
+          <AdminPageCardBtn item={item} />
+        )}
       </CardActionArea>
     </Card>
   );

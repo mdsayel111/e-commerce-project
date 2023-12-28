@@ -32,11 +32,9 @@ export const GetToken = async (email) => {
 
 export const GetRole = async (user) => {
   try {
-    // console.log(user);
     const result = await axios.get(`/get-role/${user?.email}`);
     return result.data.role;
   } catch (err) {
-    console.log(err);
   }
 };
 

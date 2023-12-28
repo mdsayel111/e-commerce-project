@@ -19,6 +19,4 @@ const app = initializeApp(firebaseConfig);
 
 const auth = getAuth(app);
 
-// console.log(process.env.NEXT_PUBLIC_API_KEY);
-
 export default auth;

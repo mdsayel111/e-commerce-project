@@ -1,6 +1,5 @@
 import { Inter } from "next/font/google";
 import "./globals.css";
-import Navbar from "@/components/shared/Navbar/Navbar";
 import MuiConfig from "@/configaration/MUI.config";
 import GlobalContextProvider from "@/context/GlobalContext";
 import AuthProvider from "@/context/AuthContext";
@@ -20,8 +19,9 @@ export default function RootLayout({ children }) {
         <GlobalContextProvider>
           <AuthProvider>
             <MuiConfig>
-              <Navbar />
-              <PrivateRoute>{children}</PrivateRoute>
+              <PrivateRoute>
+                {children}
+              </PrivateRoute>
               <Toaster />
             </MuiConfig>
           </AuthProvider>

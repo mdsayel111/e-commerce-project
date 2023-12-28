@@ -11,9 +11,11 @@ import Typography from "@mui/material/Typography";
 import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
 import PlayArrowIcon from "@mui/icons-material/PlayArrow";
 import SkipNextIcon from "@mui/icons-material/SkipNext";
+import { usePathname } from "next/navigation";
 
 const Cart = ({ item }) => {
   const theme = useTheme();
+  const path = usePathname();
 
   return (
     <Card sx={{ display: "flex" }}>

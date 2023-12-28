@@ -13,10 +13,6 @@ const PrivateRoute = ({ children }) => {
 
   const privateRoute = ["products", "cart"];
 
-  //   console.log(privateRoute.includes(path));
-  //   console.log(path.replace(/^\/|\/$/g, ""));
-  //   console.log(privateRoute.includes(path.replace(/^\/|\/$/g, "")));
-
   useEffect(() => {
     if (!user && privateRoute.includes(path.replace(/^\/|\/$/g, ""))) {
       router.push("/signup-or-signin");
