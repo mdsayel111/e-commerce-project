@@ -9,7 +9,7 @@ import { Block } from "@mui/icons-material";
 const AdminNavbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   return (
-    <div className="lg:w-[20%] w-full">
+    <div className="lg:w-[20%] w-full z-20">
       <div className="hidden sticky top-0 lg:flex pt-20 text-center gap-8 flex-col p-8 text-xl bg-black text-white min-h-screen">
         <Link href={"/"}>Home</Link>
         <Link href={"/admin/dashboard/all-product"}>All product</Link>
