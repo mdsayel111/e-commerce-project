@@ -1,6 +1,5 @@
 import { userCollection } from "@/Utils/MongoDB";
 import { NextResponse } from "next/server";
-import { json } from "react-router-dom";
 const jwt = require("jsonwebtoken");
 
 export async function GET(req, { params }) {

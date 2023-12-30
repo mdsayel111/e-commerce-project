@@ -1,12 +1,11 @@
+import { getSingleProducts } from "@/Utils/Fetch";
 import UpdateProductForm from "@/components/UpdateProduct/UpdateProductFom";
 import axios from "axios";
 import React from "react";
 
 const page = async ({ searchParams }) => {
-  const res = await axios.get(
-    `http://localhost:3000/api/admin/product?id=${searchParams.id}`
-  );
-  const data = res.data.result;
+  const data = await getSingleProducts(searchParams.id);
+  console.log(data);
   return (
     <div className="w-fit mx-auto">
       <UpdateProductForm item={data} />

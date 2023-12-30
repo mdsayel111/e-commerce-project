@@ -15,12 +15,12 @@ export async function DELETE(req) {
   return NextResponse.json({ massage: "product delete successful" });
 }
 
-export async function GET(req) {
-  const { searchParams } = new URL(req.url);
-  const id = searchParams.get("id");
-  const result = await productCollection.findOne({ _id: new ObjectId(id) });
-  return NextResponse.json({ result });
-}
+// export async function GET(req) {
+//   const { searchParams } = new URL(req.url);
+//   const id = searchParams.get("id");
+//   const result = await productCollection.findOne({ _id: new ObjectId(id) });
+//   return NextResponse.json({ result });
+// }
 
 export async function PATCH(req) {
   const { searchParams } = new URL(req.url);
