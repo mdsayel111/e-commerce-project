@@ -1,9 +1,20 @@
 import { ObjectId } from "mongodb";
 import { orderCollection, productCollection } from "./MongoDB";
 
-export const getAllProducts = async () => {
-  const result = await productCollection.find({}).toArray();
-  return result;
+export const getAllProducts = async (searchString) => {
+  let result = [];
+
+  if (searchString === "all") {
+    result = await productCollection.find({}).toArray();
+  } else {
+    result = await productCollection
+      .find({
+        name: { $regex: new RegExp(searchString, "i") },
+      })
+      .toArray();
+  }
+
+  return JSON.parse(JSON.stringify(result));
 };
 
 export const getSingleProducts = async (id) => {
@@ -14,6 +25,6 @@ export const getSingleProducts = async (id) => {
 };
 
 export const getOrdrs = async (id) => {
-  const result = await orderCollection.find({}).toArray();
+  const result = await orderCollection.find({ status: "pending" }).toArray();
   return result;
 };

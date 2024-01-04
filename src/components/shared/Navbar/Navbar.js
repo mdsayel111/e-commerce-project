@@ -18,6 +18,7 @@ import Link from "next/link";
 import useAuth from "@/Hooks/useAuth";
 import { Button } from "@mui/material";
 import Logo from "./Logo";
+import { useRouter } from "next/navigation";
 
 const SearchIconWrapper = styled("div")(({ theme }) => ({
   padding: theme.spacing(0, 2),
@@ -64,7 +65,10 @@ const Search = styled("div")(({ theme }) => ({
 function Navbar() {
   const [anchorElNav, setAnchorElNav] = React.useState(null);
   const [anchorElUser, setAnchorElUser] = React.useState(null);
-  const { user, SignOut } = useAuth();
+  const { user, role, SignOut } = useAuth();
+  const router = useRouter();
+
+  console.log(role);
 
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
@@ -83,6 +87,14 @@ function Navbar() {
 
   const logOut = () => {
     SignOut();
+    localStorage.removeItem("token");
+  };
+
+  const handleSearch = (e) => {
+    e.preventDefault();
+    const searchString = e.target.searchString.value;
+    router.push(`/products?search=${searchString}`);
+    router.refresh();
   };
 
   return (
@@ -136,7 +148,7 @@ function Navbar() {
                 </Typography>
                 <Typography textAlign="center">
                   <Link
-                    href={"/products"}
+                    href={"/products?search=all"}
                     onClick={handleCloseNavMenu}
                     sx={{ my: 2, color: "black", display: "block" }}
                   >
@@ -144,13 +156,17 @@ function Navbar() {
                   </Link>
                 </Typography>
                 <Typography textAlign="center">
-                  <Link
-                    href={"/admin/dashboard/all-product"}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "black", display: "block" }}
-                  >
-                    Dashboard
-                  </Link>
+                  {role === "admin" ? (
+                    <Link
+                      href={"/admin/dashboard/all-product"}
+                      onClick={handleCloseNavMenu}
+                      sx={{ my: 2, color: "black", display: "block" }}
+                    >
+                      Dashboard
+                    </Link>
+                  ) : (
+                    ""
+                  )}
                 </Typography>
                 <Typography textAlign="center">
                   <Link
@@ -200,7 +216,7 @@ function Navbar() {
               Home
             </Link>
             <Link
-              href={"/products"}
+              href={"/products?search=all"}
               onClick={handleCloseNavMenu}
               sx={{ my: 2, color: "black", display: "block" }}
             >
@@ -213,13 +229,17 @@ function Navbar() {
             >
               Cart
             </Link>
-            <Link
-              href={"/admin/dashboard/all-product"}
-              onClick={handleCloseNavMenu}
-              sx={{ my: 2, color: "black", display: "block" }}
-            >
-              Dashboard
-            </Link>
+            {role === "admin" ? (
+              <Link
+                href={"/admin/dashboard/all-product"}
+                onClick={handleCloseNavMenu}
+                sx={{ my: 2, color: "black", display: "block" }}
+              >
+                Dashboard
+              </Link>
+            ) : (
+              ""
+            )}
             {user ? (
               <Button
                 fullWidth
@@ -249,15 +269,18 @@ function Navbar() {
               display: { xs: "none", md: "flex" },
             }}
           >
-            <Search>
-              <SearchIconWrapper>
-                <SearchIcon />
-              </SearchIconWrapper>
-              <StyledInputBase
-                placeholder="Search…"
-                inputProps={{ "aria-label": "search" }}
-              />
-            </Search>
+            <form onSubmit={handleSearch}>
+              <Search>
+                <SearchIconWrapper>
+                  <SearchIcon />
+                </SearchIconWrapper>
+                <StyledInputBase
+                  name="searchString"
+                  placeholder="Search…"
+                  inputProps={{ "aria-label": "search" }}
+                />
+              </Search>
+            </form>
           </Box>
         </div>
       </Container>

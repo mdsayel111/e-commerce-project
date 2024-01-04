@@ -18,7 +18,7 @@ const Cart = ({ item }) => {
   const path = usePathname();
 
   return (
-    <Card sx={{ display: "flex" }}>
+    <Card sx={{ display: "inline-flex" }}>
       <CardMedia
         component="img"
         sx={{ width: 151 }}

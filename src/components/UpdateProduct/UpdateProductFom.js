@@ -15,9 +15,10 @@ import { styled } from "@mui/material/styles";
 import { useRouter } from "next/navigation";
 import { FaShoppingCart } from "react-icons/fa";
 import { uploadImage } from "@/Utils/Utils";
-import axios from "axios";
 import useComponentLoader from "@/Hooks/useComponentLoader";
 import toast from "react-hot-toast";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import axios from "axios";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -29,6 +30,7 @@ export default function UpdateProductForm({ item }) {
   const Loader = useComponentLoader();
   const router = useRouter();
   const ref = React.useRef();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -53,7 +55,14 @@ export default function UpdateProductForm({ item }) {
       imgUrl = await uploadImage(formData);
     }
     const product = { name, imgUrl, description, price };
-    await axios.patch(`/api/admin/product?id=${item._id}`, product);
+    try {
+      const res = await axiosSecure.patch(
+        `/api/admin/product?id=${item._id}`,
+        product
+      );
+    } catch (err) {
+      return toast.error("Please SignIn");
+    }
     setLoading(false);
     router.refresh();
     ref.current.reset();
@@ -163,7 +172,7 @@ export default function UpdateProductForm({ item }) {
                     color: "white !important",
                   }}
                 >
-                  {loading ? Loader : "Add Product"}
+                  {loading ? Loader : "Update Product"}
                 </Button>
               </div>
             </Grid>

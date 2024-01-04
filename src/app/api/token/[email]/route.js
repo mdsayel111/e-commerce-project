@@ -7,13 +7,18 @@ export async function GET(req, { params }) {
     {
       email: params.email,
     },
-    process.env.NEXT_PUBLIC_SECRET
+    process.env.NEXT_PUBLIC_SECRET,
+    {
+      expiresIn: "7d", // 7 days
+    }
   );
 
-  return new NextResponse(JSON.stringify({ massage: "token" }), {
-    status: 200,
-    headers: {
-      "Set-Cookie": `token=${token}; sameSite=strict; httpOnly=true; maxAge=60*60*24`,
-    },
-  });
+  return NextResponse.json({ token: token });
+
+  // return new NextResponse(JSON.stringify({ massage: "token" }), {
+  //   status: 200,
+  //   headers: {
+  //     "Set-Cookie": `token=${token}; sameSite=true; secure; httpOnly=true; maxAge=60*60*24; Path=${"/"}`,
+  //   },
+  // });
 }

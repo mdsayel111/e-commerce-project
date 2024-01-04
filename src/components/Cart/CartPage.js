@@ -6,7 +6,6 @@ import Cart from "./Cart";
 import { Button } from "@mui/base";
 import axios from "axios";
 import toast from "react-hot-toast";
-import Link from "next/link";
 import { useRouter, useSearchParams } from "next/navigation";
 
 const CartPage = () => {

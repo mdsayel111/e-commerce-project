@@ -54,8 +54,6 @@ const CheckOutForm = () => {
       ).toFixed(2)
     );
 
-    console.log(amount);
-
     const order = {
       email: user?.email,
       cart: cart,
@@ -92,7 +90,11 @@ const CheckOutForm = () => {
   return (
     <form onSubmit={handleSubmit}>
       <PaymentElement />
-      <button type="submit" disabled={!stripe || !elements}>
+      <button
+        type="submit"
+        disabled={!stripe || !elements}
+        className="bg-black text-white px-6 py-1 rounded-xl mt-4 w-fit block mx-auto"
+      >
         Pay
       </button>
       {/* Show error message to your customers */}

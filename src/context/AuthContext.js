@@ -16,6 +16,7 @@ import { GetRole, GetToken, SaveUserInDb, uploadImage } from "../Utils/Utils";
 import toast from "react-hot-toast";
 import useLoader from "@/Hooks/usePageLoader";
 import { useRouter } from "next/navigation";
+import axios from "axios";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -24,9 +25,12 @@ export const AuthContext = createContext();
 const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [user, setUser] = useState(null);
+  const [role, setRole] = useState(null);
   const [cart, setCart] = useState([]);
   const Loader = useLoader();
   const router = useRouter();
+
+  console.log(role);
 
   const SignUp = async (name, email, password, formData) => {
     try {
@@ -39,7 +43,7 @@ const AuthProvider = ({ children }) => {
       if (result.user) {
         await UpdateUserFirebase(name, photoUrl);
         const mongoDBSaveResult = await SaveUserInDb(result.user);
-        await GetToken(result.user.email);
+        GetToken(result.user.email);
         if (mongoDBSaveResult.data.insertedId) {
           toast.success("User creat successful");
         }
@@ -101,13 +105,18 @@ const AuthProvider = ({ children }) => {
     onAuthStateChanged(auth, (user) => {
       if (user) {
         setUser(user);
+        const getRole = async () => {
+          const role = await GetRole(user);
+          setRole(role);
+        };
+        getRole();
         setLoading(false);
       } else {
         setUser(null);
         setLoading(false);
       }
     });
-  }, []);
+  }, [user]);
 
   useEffect(() => {
     const cart = window.localStorage.getItem("cart");
@@ -124,6 +133,8 @@ const AuthProvider = ({ children }) => {
     SignOut,
     cart,
     setCart,
+    role,
+    setRole,
   };
 
   return (

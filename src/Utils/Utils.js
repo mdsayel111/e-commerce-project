@@ -1,5 +1,6 @@
 import axios from "axios";
 // import emailjs from "@emailjs/browser";
+var jwt = require("jsonwebtoken");
 
 export const uploadImage = async (formData) => {
   const imgbbResult = await axios.post(
@@ -11,11 +12,15 @@ export const uploadImage = async (formData) => {
 };
 
 export const SaveUserInDb = async (user) => {
-  const mongoDBSaveResult = await axios.post("/api/users", {
-    ...user,
-    role: "user",
-  });
-  return mongoDBSaveResult;
+  const res = await axios.get(`/api/users?email=${user.email}`);
+  const userInDB = res.data;
+  if (!userInDB) {
+    const mongoDBSaveResult = await axios.post("/api/users", {
+      ...user,
+      role: "user",
+    });
+    return mongoDBSaveResult;
+  }
 };
 
 export const UpdateUserMongoDB = async (user) => {
@@ -28,14 +33,15 @@ export const UpdateUserMongoDB = async (user) => {
 
 export const GetToken = async (email) => {
   const res = await axios.get(`/api/token/${email}`);
+  const data = res.data;
+  localStorage.setItem("token", data.token);
 };
 
 export const GetRole = async (user) => {
   try {
-    const result = await axios.get(`/get-role/${user?.email}`);
+    const result = await axios.get(`/api/get-role?email=${user?.email}`);
     return result.data.role;
-  } catch (err) {
-  }
+  } catch (err) {}
 };
 
 export const SendEmail = async (email, massage) => {
@@ -63,4 +69,28 @@ export const SendEmail = async (email, massage) => {
         console.log("Email sending failed:", error);
       }
     );
+};
+
+export const VerifyToken = async (req) => {
+  let isVerify = false;
+  try {
+    const token = req.headers.get("Token");
+    const decoded = jwt.verify(token, process.env.NEXT_PUBLIC_SECRET);
+    if (decoded) {
+      req.userEmail = decoded.email;
+      isVerify = true;
+    } else {
+      isVerify = false;
+    }
+  } catch (err) {
+    isVerify = false;
+  }
+  return isVerify;
+};
+
+export const VerifyAdmin = async (req) => {
+  if (req.userEmail === "mdsayel111@gmail.com") {
+    return true;
+  }
+  return false;
 };

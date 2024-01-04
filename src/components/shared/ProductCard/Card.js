@@ -13,10 +13,9 @@ import AdminPageCardBtn from "./AdminPageCardBtn";
 import "./Card.css";
 import ConfirmOrderBtn from "./ConfirmOrderBtn";
 
-export default function MultiActionAreaCard({ item }) {
+const MultiActionAreaCard = ({ item }) => {
   const { user, setCart } = useAuth();
   const path = usePathname();
-
   return (
     <Card sx={{ maxWidth: 300, height: "100%" }}>
       <CardActionArea
@@ -61,4 +60,6 @@ export default function MultiActionAreaCard({ item }) {
       ( )
     </Card>
   );
-}
+};
+
+export default MultiActionAreaCard;

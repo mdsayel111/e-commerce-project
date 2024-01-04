@@ -4,7 +4,6 @@ import Link from "next/link";
 import Logo from "../shared/Navbar/Logo";
 import { CiMenuBurger } from "react-icons/ci";
 import { useState } from "react";
-import { Block } from "@mui/icons-material";
 
 const AdminNavbar = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
