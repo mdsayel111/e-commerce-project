@@ -51,13 +51,12 @@ const MultiActionAreaCard = ({ item }) => {
           </Typography>
         </CardContent>
         <p>{`Price : $ ${item.price}`}</p>
-        {path === "/products" ? (
+        {path === "/products" || path === "/" ? (
           <UserPageCardBtn item={item} />
         ) : (
           <AdminPageCardBtn item={item} />
         )}
       </CardActionArea>
-      ( )
     </Card>
   );
 };

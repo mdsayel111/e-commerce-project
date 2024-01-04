@@ -5,3 +5,7 @@
 .css-1idz92c-MuiCircularProgress-svg {
   font-size: 20px;
 }
+
+#shop-by-chooise:hover #shop-now-div{
+  display: flex;
+}
