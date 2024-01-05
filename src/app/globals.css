@@ -6,6 +6,15 @@
   font-size: 20px;
 }
 
-#shop-by-chooise:hover #shop-now-div{
+#shop-by-chooise:hover #shop-now-div {
   display: flex;
+}
+
+#menu-item p a {
+  display: inline-block;
+  margin-bottom: 16px;
+}
+
+#admin-menu-item li {
+  margin-bottom: 16px;
 }

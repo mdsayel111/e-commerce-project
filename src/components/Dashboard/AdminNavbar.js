@@ -23,6 +23,7 @@ const AdminNavbar = () => {
             className="text-3xl"
           />
           <ul
+            id="admin-menu-item"
             className="absolute top-6 bg-gray-50 rounded-lg right-0 p-8 space-y-2 font-semibold w-[162px] text-center"
             style={{ display: `${isModalOpen ? "Block" : "none"}` }}
           >

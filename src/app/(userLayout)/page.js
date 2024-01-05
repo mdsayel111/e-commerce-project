@@ -7,7 +7,6 @@ import Link from "next/link";
 export default async function Home() {
   const res = await getAllProducts("all");
   const data = res.slice(1, 5);
-  console.log(data);
   return (
     <>
       <Slider />
@@ -63,7 +62,7 @@ export default async function Home() {
         <h1 className="w-fit uppercase mt-10 mx-auto text-2xl font-bold mb-10">
           Trending Products
         </h1>
-        <div className="flex flex-wrap gap-4 w-fit mx-auto">
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-fit mx-auto">
           {data?.map((item) => (
             <MultiActionAreaCard key={item._id} item={item} />
           ))}

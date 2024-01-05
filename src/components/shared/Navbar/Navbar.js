@@ -136,7 +136,7 @@ function Navbar() {
                 mr: "20px",
               }}
             >
-              <MenuItem className="flex flex-col p-4">
+              <MenuItem id="menu-item" className="flex flex-col p-4">
                 <Typography textAlign="center">
                   <Link
                     href={"/"}
@@ -165,7 +165,7 @@ function Navbar() {
                       Dashboard
                     </Link>
                   ) : (
-                    ""
+                    <></>
                   )}
                 </Typography>
                 <Typography textAlign="center">
