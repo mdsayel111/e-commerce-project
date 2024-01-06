@@ -14,15 +14,16 @@ const PrivateRoute = ({ children }) => {
   const privateRoute = ["products", "cart"];
 
   useEffect(() => {
+    console.log("inside useEffect");
     if (!user && privateRoute.includes(path.replace(/^\/|\/$/g, ""))) {
       router.push("/signup-or-signin");
     }
-  }, [user]);
+  }, [user, path]);
 
   return (
     <>
       {!user && privateRoute.includes(path.replace(/^\/|\/$/g, "")) ? (
-        <div className="flex h-screen justify-center items-center">
+        <div className="min-h-screen flex justify-center items-center">
           {Loader}
         </div>
       ) : (
