@@ -17,6 +17,8 @@ import toast from "react-hot-toast";
 import useLoader from "@/Hooks/usePageLoader";
 import { useRouter } from "next/navigation";
 import axios from "axios";
+import useTest from "@/Hooks/useTest";
+import Test from "@/components/Test/Test";
 
 const googleProvider = new GoogleAuthProvider();
 
@@ -29,8 +31,6 @@ const AuthProvider = ({ children }) => {
   const [cart, setCart] = useState([]);
   const Loader = useLoader();
   const router = useRouter();
-
-  console.log(role);
 
   const SignUp = async (name, email, password, formData) => {
     try {
@@ -110,6 +110,8 @@ const AuthProvider = ({ children }) => {
           setRole(role);
         };
         getRole();
+        const cart = window.localStorage.getItem("cart");
+        setCart(JSON.parse(cart));
         setLoading(false);
       } else {
         setUser(null);
@@ -117,11 +119,6 @@ const AuthProvider = ({ children }) => {
       }
     });
   }, [user]);
-
-  useEffect(() => {
-    const cart = window.localStorage.getItem("cart");
-    setCart(JSON.parse(cart));
-  }, []);
 
   const authInfo = {
     loading,
@@ -136,6 +133,9 @@ const AuthProvider = ({ children }) => {
     role,
     setRole,
   };
+
+  useEffect(() => {
+  }, []);
 
   return (
     <AuthContext.Provider value={authInfo}>
@@ -152,9 +152,10 @@ const AuthProvider = ({ children }) => {
           {Loader}
         </div>
       ) : (
-        children
+        <>
+          {children}
+        </>
       )}
-      {/* {children} */}
     </AuthContext.Provider>
   );
 };

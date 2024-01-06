@@ -4,101 +4,104 @@ import React, { useState } from "react";
 import {
   CardElement,
   Elements,
-  PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
 
 import { loadStripe } from "@stripe/stripe-js";
-import axios from "axios";
 import useAuth from "@/Hooks/useAuth";
+import { useRouter } from "next/navigation";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
+import axios from "axios";
 
 const stripePromise = loadStripe(
   "pk_test_51OEV5zDsoBM3ry43gjBBY7QNcBJfRrNZrlI2QSR7iEqKi4ghfcMWpkNO6sbY3qEJn8ABnucpU9keroEdpuXquY3V00e7y3B82A"
 );
-const options = {
-  mode: "payment",
-  amount: 1099,
-  currency: "usd",
-  // Fully customizable with appearance API.
-  appearance: {
-    /*...*/
-  },
-};
 
 const CheckOutForm = () => {
   const stripe = useStripe();
   const elements = useElements();
   const { cart, user, setCart } = useAuth();
+  const router = useRouter();
+  const axiosSecure = useAxiosSecure();
 
   const [errorMessage, setErrorMessage] = useState(null);
 
-  const handleSubmit = async (event) => {
-    event.preventDefault();
-
-    if (elements == null) {
-      return;
-    }
-
-    // Trigger form validation and wallet collection
-    const { error: submitError } = await elements.submit();
-    if (submitError) {
-      // Show error to your customer
-      setErrorMessage(submitError.message);
-      return;
-    }
-
-    const amount = parseFloat(
-      parseFloat(
-        cart.reduce((accumulator, item) => accumulator + item.price, 0)
-      ).toFixed(2)
-    );
-
+  const afterPayment = async () => {
     const order = {
       email: user?.email,
       cart: cart,
       status: "pending",
     };
+    await axiosSecure.post("/api/order", order);
+    router.push("/cart");
+    toast.success("Your order placed");
+    setCart([]);
+    window.localStorage.removeItem("cart");
+    window.localStorage.removeItem("order");
+    await axios.post("/api/sendmail", {
+      userEmail: order.email,
+      subject: "Order placed",
+      massage: "Your order placed successful",
+    });
+  };
 
-    // Create the PaymentIntent and obtain clientSecret from your server endpoint
-    // fetch("/api/create-intent");
-    const res = await axios.post("/api/create-intent", { amount: amount });
-    const { client_secret: clientSecret } = await res.data;
+  const handleSubmit = async (event) => {
+    // Block native form submission.
+    event.preventDefault();
 
-    const { error } = await stripe.confirmPayment({
-      //`Elements` instance that was used to create the Payment Element
-      elements,
-      clientSecret,
-      confirmParams: {
-        return_url: "http://localhost:3000/cart?complete=true",
-      },
+    if (!stripe || !elements) {
+      // Stripe.js has not loaded yet. Make sure to disable
+      // form submission until Stripe.js has loaded.
+      return;
+    }
+
+    // Get a reference to a mounted CardElement. Elements knows how
+    // to find your CardElement because there can only ever be one of
+    // each type of element.
+    const card = elements.getElement(CardElement);
+
+    if (card == null) {
+      return;
+    }
+
+    // Use your card Element with other Stripe.js APIs
+    const { error, paymentMethod } = await stripe.createPaymentMethod({
+      type: "card",
+      card,
     });
 
     if (error) {
-      // This point will only be reached if there is an immediate error when
-      // confirming the payment. Show error to your customer (for example, payment
-      // details incomplete)
-      console.log(error);
-      setErrorMessage(error.message);
+      console.log("[error]", error);
     } else {
-      // Your customer will be redirected to your `return_url`. For some payment
-      // methods like iDEAL, your customer will be redirected to an intermediate
-      // site first to authorize the payment, then redirected to the `return_url`.
+      afterPayment();
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <PaymentElement />
-      <button
-        type="submit"
-        disabled={!stripe || !elements}
-        className="bg-black text-white px-6 py-1 rounded-xl mt-4 w-fit block mx-auto"
-      >
-        Pay
-      </button>
-      {/* Show error message to your customers */}
-      {errorMessage && <div>{errorMessage}</div>}
+      <CardElement
+        options={{
+          style: {
+            base: {
+              fontSize: "16px",
+              color: "#424770",
+              "::placeholder": {
+                color: "#aab7c4",
+              },
+            },
+            invalid: {
+              color: "#9e2146",
+            },
+          },
+        }}
+      />
+      <div className="w-fit mx-auto mt-4 bg-black text-white px-4 py-[4px] rounded-xl">
+        <button type="submit" disabled={!stripe}>
+          Pay
+        </button>
+      </div>
     </form>
   );
 };
@@ -106,7 +109,7 @@ const CheckOutForm = () => {
 const CheckOut = () => {
   return (
     <div className="lg:w-[50%] w-full mx-auto mt-10">
-      <Elements stripe={stripePromise} options={options}>
+      <Elements stripe={stripePromise}>
         <CheckOutForm />
       </Elements>
     </div>

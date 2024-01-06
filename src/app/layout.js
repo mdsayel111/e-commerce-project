@@ -19,14 +19,12 @@ export default function RootLayout({ children }) {
         <link rel="icon" type="image/x-icon" href="/image/logo.jpeg"></link>
       </head>
       <body suppressHydrationWarning={true} className={inter.className}>
-        <GlobalContextProvider>
-          <AuthProvider>
-            <MuiConfig>
-              <PrivateRoute>{children}</PrivateRoute>
-              <Toaster />
-            </MuiConfig>
-          </AuthProvider>
-        </GlobalContextProvider>
+        <AuthProvider>
+          <MuiConfig>
+            <PrivateRoute>{children}</PrivateRoute>
+            <Toaster />
+          </MuiConfig>
+        </AuthProvider>
       </body>
     </html>
   );

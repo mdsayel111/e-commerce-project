@@ -17,13 +17,17 @@ const PrivateRoute = ({ children }) => {
     if (!user && privateRoute.includes(path.replace(/^\/|\/$/g, ""))) {
       router.push("/signup-or-signin");
     }
-  }, [path]);
+  }, [user]);
 
   return (
     <>
-      {!user && privateRoute.includes(path.replace(/^\/|\/$/g, ""))
-        ? Loader
-        : children}
+      {!user && privateRoute.includes(path.replace(/^\/|\/$/g, "")) ? (
+        <div className="flex h-screen justify-center items-center">
+          {Loader}
+        </div>
+      ) : (
+        children
+      )}
     </>
   );
 };

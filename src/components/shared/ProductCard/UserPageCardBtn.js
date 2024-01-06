@@ -14,7 +14,7 @@ const UserPageCardBtn = ({ item }) => {
     if (cartInLocal) {
       const cart = JSON.parse(cartInLocal);
       if (cart?.find((obj) => obj._id === item._id)) {
-        toast.error("Product in cart");
+        toast.error("Product already in cart");
       } else {
         cart.push(item);
         setCart(cart);

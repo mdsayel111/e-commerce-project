@@ -11,7 +11,6 @@ import { usePathname } from "next/navigation";
 import UserPageCardBtn from "./UserPageCardBtn";
 import AdminPageCardBtn from "./AdminPageCardBtn";
 import "./Card.css";
-import ConfirmOrderBtn from "./ConfirmOrderBtn";
 
 const MultiActionAreaCard = ({ item }) => {
   const { user, setCart } = useAuth();

@@ -4,15 +4,16 @@ import useAuth from "@/Hooks/useAuth";
 import React, { useEffect, useState } from "react";
 import Cart from "./Cart";
 import { Button } from "@mui/base";
-import axios from "axios";
 import toast from "react-hot-toast";
 import { useRouter, useSearchParams } from "next/navigation";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const CartPage = () => {
   const { cart, user, setCart } = useAuth();
   const [loading, setLoading] = useState(false);
   const router = useRouter();
   const searchParams = useSearchParams();
+  const axiosSecure = useAxiosSecure();
   const [isPaymentSuccess, setIsPaymentSuccess] = useState(
     searchParams.get("complete")
   );
@@ -27,37 +28,18 @@ const CartPage = () => {
       };
       window.localStorage.setItem("order", JSON.stringify(order));
       router.push("/payment");
-      // setCart([]);
-      // toast.success("Order confirmed");
-    } catch (err) {
-      // toast.error("Something went wrong");
-    }
+    } catch (err) {}
   };
 
-  const afterPayment = async () => {
-    if (isPaymentSuccess) {
-      const order = {
-        email: user?.email,
-        cart: cart,
-        status: "pending",
-      };
-      await axios.post("/api/order", order);
-      setCart([]);
-      window.localStorage.removeItem("cart");
-      window.localStorage.removeItem("order");
-      toast.success("Order Successful");
-      setIsPaymentSuccess(null);
-      router.push("/cart");
-    }
-  };
-
-  useEffect(() => {
-    afterPayment();
-  }, []);
+  // useEffect(() => {
+  //   return () => {
+  //     afterPayment();
+  //   };
+  // }, []);
 
   return (
     <>
-      {isPaymentSuccess ? (
+      {false ? (
         loading
       ) : (
         <div className="mt-10 flex gap-8 flex-col md:flex-row">
@@ -81,7 +63,6 @@ const CartPage = () => {
             <Button
               disabled={!cart?.length}
               type="button"
-              fullWidth
               variant="contained"
               style={{
                 backgroundColor: "black",
@@ -97,6 +78,7 @@ const CartPage = () => {
             </Button>
           </div>
         </div>
+        // <h1>cart</h1>
       )}
     </>
   );

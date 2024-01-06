@@ -1,6 +1,7 @@
 import axios from "axios";
 // import emailjs from "@emailjs/browser";
-var jwt = require("jsonwebtoken");
+const jwt = require("jsonwebtoken");
+
 
 export const uploadImage = async (formData) => {
   const imgbbResult = await axios.post(
@@ -42,33 +43,6 @@ export const GetRole = async (user) => {
     const result = await axios.get(`/api/get-role?email=${user?.email}`);
     return result.data.role;
   } catch (err) {}
-};
-
-export const SendEmail = async (email, massage) => {
-  // Set your email template parameters
-  var templateParams = {
-    to_name: "",
-    from_name: "Your Name",
-    recipient_email: email,
-    message: massage || "your request is rejected",
-  };
-
-  // Send email using Email.js
-  emailjs
-    .send(
-      import.meta.env.VITE_SERVICE_ID,
-      import.meta.env.VITE_TAMPLATE_ID,
-      templateParams,
-      import.meta.env.VITE_PUBLIC_KEY
-    )
-    .then(
-      function (response) {
-        console.log("Email sent successfully:", response);
-      },
-      function (error) {
-        console.log("Email sending failed:", error);
-      }
-    );
 };
 
 export const VerifyToken = async (req) => {

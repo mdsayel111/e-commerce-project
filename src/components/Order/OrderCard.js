@@ -9,12 +9,9 @@ import useAuth from "@/Hooks/useAuth";
 import { usePathname, useRouter } from "next/navigation";
 import "../shared/ProductCard/Card.css";
 import { useTheme } from "@mui/material/styles";
-import IconButton from "@mui/material/IconButton";
-import SkipPreviousIcon from "@mui/icons-material/SkipPrevious";
-import PlayArrowIcon from "@mui/icons-material/PlayArrow";
-import SkipNextIcon from "@mui/icons-material/SkipNext";
 import axios from "axios";
 import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import toast from "react-hot-toast";
 
 export default function OrderCard({ order }) {
   const { user, setCart } = useAuth();
@@ -25,6 +22,12 @@ export default function OrderCard({ order }) {
   const orderItems = order.cart;
   const handleConfirmOrder = async (id) => {
     await axiosSecure.patch(`/api/admin/order?id=${id}`);
+    await axios.post("/api/sendmail", {
+      userEmail: order.email,
+      subject: "Order confirm",
+      massage: "Your order confirm",
+    });
+    toast.success("Order confirm successful");
     router.refresh();
   };
 

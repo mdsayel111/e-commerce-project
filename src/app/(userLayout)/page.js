@@ -1,12 +1,14 @@
 import { getAllProducts } from "@/Utils/Fetch";
 import Slider from "@/components/Home/Slider/Slider";
 import MultiActionAreaCard from "@/components/shared/ProductCard/Card";
+import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
   const res = await getAllProducts("all");
   const data = res.slice(1, 5);
+
   return (
     <>
       <Slider />

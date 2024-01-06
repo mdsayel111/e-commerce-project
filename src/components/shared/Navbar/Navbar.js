@@ -68,8 +68,6 @@ function Navbar() {
   const { user, role, SignOut } = useAuth();
   const router = useRouter();
 
-  console.log(role);
-
   const handleOpenNavMenu = (event) => {
     setAnchorElNav(event.currentTarget);
   };
@@ -156,6 +154,15 @@ function Navbar() {
                   </Link>
                 </Typography>
                 <Typography textAlign="center">
+                  <Link
+                    href={"/cart"}
+                    onClick={handleCloseNavMenu}
+                    sx={{ my: 2, color: "black", display: "block" }}
+                  >
+                    Cart
+                  </Link>
+                </Typography>
+                <Typography textAlign="center">
                   {role === "admin" ? (
                     <Link
                       href={"/admin/dashboard/all-product"}
@@ -168,15 +175,7 @@ function Navbar() {
                     <></>
                   )}
                 </Typography>
-                <Typography textAlign="center">
-                  <Link
-                    href={"/cart"}
-                    onClick={handleCloseNavMenu}
-                    sx={{ my: 2, color: "black", display: "block" }}
-                  >
-                    Cart
-                  </Link>
-                </Typography>
+
                 <Typography textAlign="center">
                   {user ? (
                     <Button
