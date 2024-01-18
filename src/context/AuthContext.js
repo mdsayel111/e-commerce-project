@@ -135,6 +135,10 @@ const AuthProvider = ({ children }) => {
   };
 
   useEffect(() => {
+    console.log("auth context mount");
+    return () => {
+      console.log("AuthContext unmount");
+    };
   }, []);
 
   return (
@@ -152,9 +156,7 @@ const AuthProvider = ({ children }) => {
           {Loader}
         </div>
       ) : (
-        <>
-          {children}
-        </>
+        <>{children}</>
       )}
     </AuthContext.Provider>
   );

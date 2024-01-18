@@ -18,7 +18,7 @@ export default function RootLayout({ children }) {
       <head>
         <link rel="icon" type="image/x-icon" href="/image/logo.jpeg"></link>
       </head>
-      <body suppressHydrationWarning={true} className={inter.className}>
+      <body className={inter.className}>
         <AuthProvider>
           <MuiConfig>
             <PrivateRoute>{children}</PrivateRoute>

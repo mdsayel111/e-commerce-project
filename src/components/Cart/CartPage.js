@@ -1,7 +1,7 @@
 "use client";
 
 import useAuth from "@/Hooks/useAuth";
-import React, { useEffect, useState } from "react";
+import React, { use, useEffect, useState } from "react";
 import Cart from "./Cart";
 import { Button } from "@mui/base";
 import toast from "react-hot-toast";
@@ -31,11 +31,22 @@ const CartPage = () => {
     } catch (err) {}
   };
 
-  // useEffect(() => {
-  //   return () => {
-  //     afterPayment();
-  //   };
-  // }, []);
+  const afterPayment = async () => {
+    if (isPaymentSuccess && cart.length > 0) {
+      await axiosSecure.post("/api/order", {
+        email: user.email,
+        cart: cart,
+        status: "pending",
+      });
+      localStorage.removeItem("cart");
+      setCart([]);
+      toast.success("order successful");
+    }
+  };
+
+  useEffect(() => {
+    afterPayment();
+  }, [isPaymentSuccess]);
 
   return (
     <>

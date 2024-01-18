@@ -4,6 +4,7 @@ import React, { useState } from "react";
 import {
   CardElement,
   Elements,
+  PaymentElement,
   useElements,
   useStripe,
 } from "@stripe/react-stripe-js";
@@ -25,6 +26,9 @@ const CheckOutForm = () => {
   const { cart, user, setCart } = useAuth();
   const router = useRouter();
   const axiosSecure = useAxiosSecure();
+  const [amount, setAmount] = useState(
+    cart?.reduce((accumulator, item) => accumulator + item.price, 0).toFixed(2)
+  );
 
   const [errorMessage, setErrorMessage] = useState(null);
 
@@ -48,68 +52,78 @@ const CheckOutForm = () => {
   };
 
   const handleSubmit = async (event) => {
-    // Block native form submission.
     event.preventDefault();
 
-    if (!stripe || !elements) {
-      // Stripe.js has not loaded yet. Make sure to disable
-      // form submission until Stripe.js has loaded.
+    console.log("insde handle submit");
+
+    if (elements == null) {
       return;
     }
 
-    // Get a reference to a mounted CardElement. Elements knows how
-    // to find your CardElement because there can only ever be one of
-    // each type of element.
-    const card = elements.getElement(CardElement);
-
-    if (card == null) {
+    // Trigger form validation and wallet collection
+    const { error: submitError } = await elements.submit();
+    if (submitError) {
+      // Show error to your customer
+      setErrorMessage(submitError.message);
       return;
     }
 
-    // Use your card Element with other Stripe.js APIs
-    const { error, paymentMethod } = await stripe.createPaymentMethod({
-      type: "card",
-      card,
+    // Create the PaymentIntent and obtain clientSecret from your server endpoint
+    const res = await axios.post("/api/create-intent", { amount: amount });
+    console.log(res);
+
+    const { client_secret: clientSecret } = await res.data;
+
+    const { error } = await stripe.confirmPayment({
+      //`Elements` instance that was used to create the Payment Element
+      elements,
+      clientSecret,
+      confirmParams: {
+        return_url: "http://localhost:3000/cart?complete=true",
+      },
     });
 
     if (error) {
-      console.log("[error]", error);
+      // This point will only be reached if there is an immediate error when
+      // confirming the payment. Show error to your customer (for example, payment
+      // details incomplete)
+      setErrorMessage(error.message);
     } else {
-      afterPayment();
+      // Your customer will be redirected to your `return_url`. For some payment
+      // methods like iDEAL, your customer will be redirected to an intermediate
+      // site first to authorize the payment, then redirected to the `return_url`.
     }
   };
 
   return (
     <form onSubmit={handleSubmit}>
-      <CardElement
-        options={{
-          style: {
-            base: {
-              fontSize: "16px",
-              color: "#424770",
-              "::placeholder": {
-                color: "#aab7c4",
-              },
-            },
-            invalid: {
-              color: "#9e2146",
-            },
-          },
-        }}
-      />
-      <div className="w-fit mx-auto mt-4 bg-black text-white px-4 py-[4px] rounded-xl">
-        <button type="submit" disabled={!stripe}>
-          Pay
-        </button>
-      </div>
+      <PaymentElement />
+      <button className="bg-black text-white px-3 py-1 rounded-xl mt-8 mx-auto block" type="submit" disabled={!stripe || !elements}>
+        Pay
+      </button>
+      {/* Show error message to your customers */}
+      {errorMessage && <div>{errorMessage}</div>}
     </form>
   );
 };
 
 const CheckOut = () => {
+  const stripePromise = loadStripe(
+    "pk_test_51OEV5zDsoBM3ry43gjBBY7QNcBJfRrNZrlI2QSR7iEqKi4ghfcMWpkNO6sbY3qEJn8ABnucpU9keroEdpuXquY3V00e7y3B82A"
+  );
+
+  const options = {
+    mode: "payment",
+    amount: 1099,
+    currency: "usd",
+    // Fully customizable with appearance API.
+    appearance: {
+      /*...*/
+    },
+  };
   return (
     <div className="lg:w-[50%] w-full mx-auto mt-10">
-      <Elements stripe={stripePromise}>
+      <Elements stripe={stripePromise} options={options}>
         <CheckOutForm />
       </Elements>
     </div>

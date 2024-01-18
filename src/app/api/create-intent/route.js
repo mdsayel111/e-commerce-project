@@ -6,6 +6,7 @@ const stripe = require("stripe")(
 
 export async function POST(req) {
   const { amount } = await req.json();
+  console.log(amount);
   const { client_secret } = await stripe.paymentIntents.create({
     amount: parseInt(amount * 100),
     currency: "usd",
