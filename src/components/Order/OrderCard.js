@@ -58,7 +58,7 @@ export default function OrderCard({ order }) {
             <CardMedia
               key={orderItem._id}
               component="img"
-              sx={{ width: 50 }}
+              sx={{ width: 50, height: 50 }}
               image={orderItem.imgUrl}
               alt="Live from space album cover"
             />

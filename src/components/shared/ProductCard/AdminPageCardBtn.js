@@ -5,11 +5,13 @@ import toast from "react-hot-toast";
 import axios from "axios";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 const AdminPageCardBtn = ({ item }) => {
   const router = useRouter();
+  const axiosSecure = useAxiosSecure();
   const handleDelete = async (item) => {
-    await axios.delete(`/api/admin/product?id=${item._id}`);
+    await axiosSecure.delete(`/api/admin/product?id=${item._id}`);
     toast.success("Product delete successful");
     router.refresh();
   };

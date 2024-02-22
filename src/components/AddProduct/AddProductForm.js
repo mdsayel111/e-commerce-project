@@ -18,6 +18,7 @@ import { uploadImage } from "@/Utils/Utils";
 import axios from "axios";
 import useComponentLoader from "@/Hooks/useComponentLoader";
 import toast from "react-hot-toast";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
 
 // TODO remove, this demo shouldn't need to reset the theme.
 
@@ -28,6 +29,7 @@ export default function AddProductForm({ setSignUpOrSignIn }) {
   const navgate = useRouter();
   const Loader = useComponentLoader();
   const ref = React.useRef();
+  const axiosSecure = useAxiosSecure();
 
   const {
     register,
@@ -44,7 +46,7 @@ export default function AddProductForm({ setSignUpOrSignIn }) {
     formData.append("image", imageFile[0]);
     const imgUrl = await uploadImage(formData);
     const product = { name, imgUrl, description, price };
-    await axios.post("/api/admin/product", product);
+    await axiosSecure.post("/api/admin/product", product);
     setLoading(false);
     ref.current.reset();
     toast.success("Product add successful");
