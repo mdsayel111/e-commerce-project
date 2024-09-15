@@ -26,6 +26,10 @@ export const getSingleProducts = async (id) => {
 
 export const getOrdrs = async (id) => {
   // 
+  // const res = await fetch("http://localhost:3000/api/order", {
+  //   cache: "no-store"
+  // });
+  // return await res.json();
   const result = await orderCollection.find({ status: "pending" }).toArray();
-  return result;
+  return result
 };

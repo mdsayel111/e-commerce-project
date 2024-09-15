@@ -1,24 +1,17 @@
 "use client";
 
-import * as React from "react";
+import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { Box, CardMedia } from "@mui/material";
 import Card from "@mui/material/Card";
 import CardContent from "@mui/material/CardContent";
-import Typography from "@mui/material/Typography";
-import { Box, CardActionArea, CardActions, CardMedia } from "@mui/material";
-import useAuth from "@/Hooks/useAuth";
-import { usePathname, useRouter } from "next/navigation";
-import "../shared/ProductCard/Card.css";
-import { useTheme } from "@mui/material/styles";
 import axios from "axios";
-import useAxiosSecure from "@/Hooks/useAxiosSecure";
+import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
+import "../shared/ProductCard/Card.css";
 
 export default function OrderCard({ order }) {
-  const { user, setCart } = useAuth();
   const axiosSecure = useAxiosSecure();
   const router = useRouter();
-  const theme = useTheme();
-  const path = usePathname();
   const orderItems = order.cart;
   const handleConfirmOrder = async (id) => {
     await axiosSecure.patch(`/api/admin/order?id=${id}`);
@@ -28,7 +21,7 @@ export default function OrderCard({ order }) {
       massage: "Your order confirm",
     });
     toast.success("Order confirm successful");
-    router.refresh();
+    router.refresh()
   };
 
   return (

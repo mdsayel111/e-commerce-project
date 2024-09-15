@@ -15,3 +15,8 @@ export async function POST(req) {
     }
   );
 }
+
+export async function GET() {
+  const result = await orderCollection.find({ status: "pending" }).toArray();
+  return NextResponse.json(result)
+}
