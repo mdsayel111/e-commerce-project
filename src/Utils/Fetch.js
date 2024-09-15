@@ -25,6 +25,7 @@ export const getSingleProducts = async (id) => {
 };
 
 export const getOrdrs = async (id) => {
+  // 
   const result = await orderCollection.find({ status: "pending" }).toArray();
   return result;
 };
