@@ -8,12 +8,19 @@ import axios from "axios";
 import { useRouter } from "next/navigation";
 import toast from "react-hot-toast";
 import "../shared/ProductCard/Card.css";
+import { useState } from "react";
+import useComponentLoader from "@/Hooks/useComponentLoader";
 
 export default function OrderCard({ order }) {
+  const [loading, setLoading] = useState(false)
   const axiosSecure = useAxiosSecure();
   const router = useRouter();
+  // get loader by hook
+  const loader = useComponentLoader()
+
   const orderItems = order.cart;
   const handleConfirmOrder = async (id) => {
+    setLoading(true)
     await axiosSecure.patch(`/api/admin/order?id=${id}`);
     await axios.post("/api/sendmail", {
       userEmail: order.email,
@@ -22,6 +29,7 @@ export default function OrderCard({ order }) {
     });
     toast.success("Order confirm successful");
     router.refresh()
+    setLoading(false)
   };
 
   return (
@@ -68,7 +76,7 @@ export default function OrderCard({ order }) {
               className="bg-black text-white px-4 py-2 rounded-xl"
               onClick={() => handleConfirmOrder(order._id)}
             >
-              Confirm Order
+              {loading ? loader : "Confirm Order"}
             </button>
           )}
         </div>

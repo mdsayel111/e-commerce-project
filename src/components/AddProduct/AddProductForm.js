@@ -80,7 +80,7 @@ export default function AddProductForm({ setSignUpOrSignIn }) {
             <FaShoppingCart />
           </Avatar>
           <Typography component="h1" variant="h5">
-            Sign up
+            Add Product
           </Typography>
           <Box
             component="form"
