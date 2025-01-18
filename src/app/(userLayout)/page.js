@@ -1,12 +1,12 @@
-import { getAllProducts } from "@/Utils/Fetch";
+import { getHomePageData } from "@/Utils/Fetch";
 import Slider from "@/components/Home/Slider/Slider";
 import MultiActionAreaCard from "@/components/shared/ProductCard/Card";
-import axios from "axios";
 import Image from "next/image";
 import Link from "next/link";
 
 export default async function Home() {
-  const data = await getAllProducts();
+  const res = await getHomePageData();
+  const { products } = res || {};
   return (
     <>
       <Slider />
@@ -63,7 +63,7 @@ export default async function Home() {
           Trending Products
         </h1>
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4 w-fit mx-auto">
-          {data?.map((item) => (
+          {products?.map((item) => (
             <MultiActionAreaCard key={item._id} item={item} />
           ))}
         </div>

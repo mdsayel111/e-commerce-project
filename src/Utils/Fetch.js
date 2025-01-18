@@ -1,25 +1,18 @@
-import { ObjectId } from "mongodb";
-import { orderCollection, productCollection } from "./MongoDB";
 import { CLIENT_APP_URL } from "@/Apis";
+import { ObjectId } from "mongodb";
+import { productCollection } from "./MongoDB";
 
-export const getAllProducts = async (searchString) => {
-  // let result = [];
+export const getHomePageData = async () => {
+  const homepageData = await fetch(CLIENT_APP_URL + "home");
+  const res = await homepageData.json();
+  return res;
+};
 
-  // if (searchString === "all") {
-  //   result = await productCollection.find({}).toArray();
-  // } else {
-  //   result = await productCollection
-  //     .find({
-  //       name: { $regex: new RegExp(searchString, "i") },
-  //     })
-  //     .toArray();
-  // }
 
-  // return JSON.parse(JSON.stringify(result));
-
-  const products = await fetch(CLIENT_APP_URL + "home");
-  const res = await products.json();
-  return res?.data;
+export const getProductsPageData = async () => {
+  const productsPageData = await fetch(CLIENT_APP_URL + "products");
+  const res = await productsPageData.json();
+  return res;
 };
 
 export const getSingleProducts = async (id) => {
