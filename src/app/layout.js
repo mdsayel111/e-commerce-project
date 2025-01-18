@@ -1,10 +1,9 @@
-import { Inter } from "next/font/google";
-import "./globals.css";
 import MuiConfig from "@/configaration/MUI.config";
-import GlobalContextProvider from "@/context/GlobalContext";
 import AuthProvider from "@/context/AuthContext";
-import { Toaster } from "react-hot-toast";
 import PrivateRoute from "@/Routes/PrivateRoute";
+import { Inter } from "next/font/google";
+import { Toaster } from "react-hot-toast";
+import "./globals.css";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata = {
